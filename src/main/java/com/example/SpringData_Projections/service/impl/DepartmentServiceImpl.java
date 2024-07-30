@@ -31,21 +31,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department createDepartment(Department department) {
-        if (department == null) {
-            throw new IllegalArgumentException("Department must not be null");
-        }
         return departmentRepository.save(department);
     }
 
     @Override
     public Department updateDepartment(Long id, Department department) {
-        if (department == null) {
-            throw new IllegalArgumentException("Department must not be null");
-        }
-        if (!departmentRepository.existsById(id)) {
-            throw new EntityNotFoundException("Department not found with id: " + id);
-        }
-        department.setId(id);
+        departmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Department not found with id: " + id));
         return departmentRepository.save(department);
     }
 
