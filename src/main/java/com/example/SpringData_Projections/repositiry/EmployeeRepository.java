@@ -10,11 +10,9 @@ import java.util.Optional;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    @Query("SELECT e.id AS id, CONCAT(e.firstName, ' ', e.lastName) AS fullName, e.position AS position, e.department.name AS departmentName " +
-            "FROM Employee e WHERE e.id = :id")
+    @Query("SELECT e FROM Employee e WHERE e.id = :id")
     Optional<EmployeeProjection> findEmployeeProjectionById(Long id);
 
-    @Query("SELECT e.id AS id, CONCAT(e.firstName, ' ', e.lastName) AS fullName, e.position AS position, e.department.name AS departmentName " +
-            "FROM Employee e WHERE e.department.name = :departmentName")
+    @Query("SELECT e FROM Employee e WHERE e.department.name = :departmentName")
     List<EmployeeProjection> findEmployeeProjectionsByDepartmentName(String departmentName);
 }
