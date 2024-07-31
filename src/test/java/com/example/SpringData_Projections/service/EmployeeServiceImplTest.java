@@ -1,5 +1,6 @@
 package com.example.SpringData_Projections.service;
 
+import com.example.SpringData_Projections.dto.EmployeeReq;
 import com.example.SpringData_Projections.model.Department;
 import com.example.SpringData_Projections.model.Employee;
 import com.example.SpringData_Projections.projection.EmployeeProjection;
@@ -32,6 +33,7 @@ public class EmployeeServiceImplTest {
 
     private Employee employee;
     private EmployeeProjection employeeProjection;
+    private EmployeeReq employeeReq;
 
     @BeforeEach
     void setUp() {
@@ -46,6 +48,13 @@ public class EmployeeServiceImplTest {
         employee.setPosition("Software Engineer");
         employee.setSalary(80000.00);
         employee.setDepartment(department);
+
+        employeeReq = new EmployeeReq();
+        employeeReq.setFirstName("John");
+        employeeReq.setLastName("Doe");
+        employeeReq.setPosition("Developer");
+        employeeReq.setSalary(75000.0);
+        employeeReq.setDepartmentId(1L);
 
         employeeProjection = new EmployeeProjection() {
             @Override
@@ -108,7 +117,7 @@ public class EmployeeServiceImplTest {
     void createEmployee_ValidEmployee_ReturnsCreatedEmployee() {
         when(employeeRepository.save(any(Employee.class))).thenReturn(employee);
 
-        Employee result = employeeService.createEmployee(employee);
+        Employee result = employeeService.createEmployee(employeeReq);
         assertNotNull(result);
         assertEquals(employee.getId(), result.getId());
         assertEquals(employee.getFirstName(), result.getFirstName());

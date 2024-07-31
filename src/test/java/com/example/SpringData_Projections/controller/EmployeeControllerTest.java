@@ -1,5 +1,6 @@
 package com.example.SpringData_Projections.controller;
 
+import com.example.SpringData_Projections.dto.EmployeeReq;
 import com.example.SpringData_Projections.model.Employee;
 import com.example.SpringData_Projections.projection.EmployeeProjection;
 import com.example.SpringData_Projections.service.EmployeeService;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Collections;
 
@@ -31,6 +33,7 @@ public class EmployeeControllerTest {
 
     private Employee employee;
     private EmployeeProjection employeeProjection;
+    private EmployeeReq employeeReq;
 
     @BeforeEach
     public void setup() {
@@ -40,6 +43,13 @@ public class EmployeeControllerTest {
         employee.setLastName("Doe");
         employee.setPosition("Developer");
         employee.setSalary(75000.0);
+
+        employeeReq = new EmployeeReq();
+        employeeReq.setFirstName("John");
+        employeeReq.setLastName("Doe");
+        employeeReq.setPosition("Developer");
+        employeeReq.setSalary(75000.0);
+        employeeReq.setDepartmentId(1L);
 
         employeeProjection = new EmployeeProjection() {
             @Override
@@ -114,11 +124,12 @@ public class EmployeeControllerTest {
 
     @Test
     public void createEmployee_ValidEmployee_ReturnsCreatedEmployee() throws Exception {
-        when(employeeService.createEmployee(any(Employee.class))).thenReturn(employee);
+        when(employeeService.createEmployee(employeeReq)).thenReturn(employee);
 
-        mockMvc.perform(post("/employees")
+        // Выполняем запрос и проверяем результат
+        mockMvc.perform(MockMvcRequestBuilders.post("/employees")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(employee)))
+                        .content(new ObjectMapper().writeValueAsString(employeeReq)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.firstName").value("John"))

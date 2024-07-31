@@ -1,5 +1,6 @@
 package com.example.SpringData_Projections.controller;
 
+import com.example.SpringData_Projections.dto.EmployeeReq;
 import com.example.SpringData_Projections.model.Employee;
 import com.example.SpringData_Projections.projection.EmployeeProjection;
 import com.example.SpringData_Projections.service.EmployeeService;
@@ -40,8 +41,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> createEmployee (@RequestBody Employee employee) {
-        Employee createEmployee = employeeService.createEmployee(employee);
+    public ResponseEntity<Employee> createEmployee (@RequestBody EmployeeReq employeeReq) {
+        Employee createEmployee = employeeService.createEmployee(employeeReq);
         return new ResponseEntity<>(createEmployee, HttpStatus.CREATED);
     }
     @PutMapping("/{id}")

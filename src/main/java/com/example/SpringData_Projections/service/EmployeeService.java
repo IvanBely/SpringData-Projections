@@ -1,5 +1,6 @@
 package com.example.SpringData_Projections.service;
 
+import com.example.SpringData_Projections.dto.EmployeeReq;
 import com.example.SpringData_Projections.model.Employee;
 import com.example.SpringData_Projections.projection.EmployeeProjection;
 
@@ -10,7 +11,7 @@ public interface EmployeeService {
 
     List<Employee> getAllEmployees();
 
-    Employee createEmployee(Employee employee);
+    Employee createEmployee(EmployeeReq employeeReq);
 
     Employee updateEmployee(Long id, Employee employee);
 

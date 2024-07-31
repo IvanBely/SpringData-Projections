@@ -1,0 +1,18 @@
+package com.example.SpringData_Projections.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class EmployeeReq {
+    private String firstName;
+    private String lastName;
+    private String position;
+    private Double salary;
+    private Long departmentId;
+}
